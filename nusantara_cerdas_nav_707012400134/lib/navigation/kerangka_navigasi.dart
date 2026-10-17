@@ -52,10 +52,27 @@ class _KerangkaNavigasiState extends State<KerangkaNavigasi> {
               children: [
                 _buatRail(),
                 const VerticalDivider(width: 1),
-                Expanded(child: _halaman[_indeksTerpilih]),
+                Expanded(
+                  child: _halaman[_indeksTerpilih],
+                ),
               ],
             )
           : _halaman[_indeksTerpilih],
+
+      // Tombol pengajuan muncul saat menu Warga dipilih.
+      floatingActionButton: _indeksTerpilih == 2
+          ? FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.form,
+                );
+              },
+              icon: const Icon(Icons.assignment),
+              label: const Text('Buat Pengajuan'),
+            )
+          : null,
+
       bottomNavigationBar:
           layarLebar ? null : _buatNavigationBar(),
     );
@@ -130,7 +147,9 @@ class _KerangkaNavigasiState extends State<KerangkaNavigasi> {
           padding: EdgeInsets.fromLTRB(24, 24, 16, 16),
           child: Text(
             'Nusantara Cerdas Mobile',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         const NavigationDrawerDestination(
@@ -154,7 +173,10 @@ class _KerangkaNavigasiState extends State<KerangkaNavigasi> {
           title: const Text('Pengaturan Kota'),
           onTap: () {
             Navigator.pop(context);
-            Navigator.pushNamed(context, AppRoutes.pengaturan);
+            Navigator.pushNamed(
+              context,
+              AppRoutes.pengaturan,
+            );
           },
         ),
         ListTile(
@@ -162,7 +184,10 @@ class _KerangkaNavigasiState extends State<KerangkaNavigasi> {
           title: const Text('Tentang Aplikasi'),
           onTap: () {
             Navigator.pop(context);
-            Navigator.pushNamed(context, AppRoutes.tentang);
+            Navigator.pushNamed(
+              context,
+              AppRoutes.tentang,
+            );
           },
         ),
         ListTile(
@@ -195,7 +220,7 @@ class _IkonWargaDenganBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final totalPengajuan =
         context.select<PengajuanModel, int>(
-      (model) => model.totalPengajuan,
+      (model) => model.jumlahPengajuan,
     );
 
     return Badge(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../pages/halaman_detail_layanan.dart';
 import '../pages/halaman_riwayat.dart';
 import '../pages/halaman_menu.dart';
+import '../pages/halaman_form_pengajuan.dart';
 import 'kerangka_navigasi.dart';
+
 
 class AppRoutes {
   static const String beranda = '/';
@@ -10,6 +13,8 @@ class AppRoutes {
   static const String riwayat = '/riwayat';
   static const String pengaturan = '/pengaturan';
   static const String tentang = '/tentang';
+  static const String form = '/form';
+  
 
   static Map<String, WidgetBuilder> daftarRoute() {
     return {
@@ -19,12 +24,14 @@ class AppRoutes {
           const HalamanMenu(judul: 'Pengaturan Kota'),
       tentang: (context) =>
           const HalamanMenu(judul: 'Tentang Aplikasi'),
+      form: (context) => const HalamanFormPengajuan(),
     };
   }
 
   static Route<dynamic>? bentukRoute(RouteSettings settings) {
     if (settings.name == detail) {
-      final argumen = settings.arguments as Map<String, String>?;
+      final argumen =
+          settings.arguments as Map<String, String>?;
 
       if (argumen == null) {
         return MaterialPageRoute(
@@ -39,7 +46,8 @@ class AppRoutes {
         builder: (_) => HalamanDetailLayanan(
           nama: argumen['nama'] ?? 'Layanan',
           dinas: argumen['dinas'] ?? 'Dinas terkait',
-          jam: argumen['jam'] ?? 'Jam operasional belum tersedia',
+          jam: argumen['jam'] ??
+              'Jam operasional belum tersedia',
           keterangan:
               argumen['keterangan'] ?? 'Belum ada keterangan.',
         ),
@@ -54,7 +62,9 @@ class AppRoutes {
   ) {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
-        appBar: AppBar(title: const Text('Route Tidak Ditemukan')),
+        appBar: AppBar(
+          title: const Text('Route Tidak Ditemukan'),
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
